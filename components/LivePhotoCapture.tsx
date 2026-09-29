@@ -111,7 +111,8 @@ export default function LivePhotoCapture({ photo, error }: Props) {
                 {photo.coords?.latitude.toFixed(5)},{" "}
                 {photo.coords?.longitude.toFixed(5)}
               </a>{" "}
-              — this map link is saved in the sheet.
+              — the map link and the exact place name for these coordinates are saved in
+              the sheet.
             </p>
           ) : (
             <p className="mt-1">
