@@ -78,7 +78,7 @@ export default function SurveyForm() {
       values,
       photo.photo as string,
       toMapsLink(photo.coords),
-      photo.coords,
+      values.address.trim(),
     );
 
     try {
