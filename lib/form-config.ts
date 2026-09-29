@@ -30,8 +30,6 @@ export interface SurveyFormValues {
   organizationType: string;
   selectType: string;
   proposalType: string;
-  location: string;
-  locationName: string;
 }
 
 export const EMPTY_SURVEY: SurveyFormValues = {
@@ -46,11 +44,15 @@ export const EMPTY_SURVEY: SurveyFormValues = {
   organizationType: "",
   selectType: "",
   proposalType: "",
-  location: "",
-  locationName: "",
 };
 
 export type FormErrors = Partial<Record<keyof SurveyFormValues | "photo", string>>;
+
+/** Minimal shape of the GPS fix captured with the live image. */
+export interface CapturedCoords {
+  latitude: number;
+  longitude: number;
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -114,13 +116,16 @@ export function validateSurvey(
 
 /**
  * Normalises raw values into the exact payload consumed by the Apps Script.
- * Optional/irrelevant fields are blanked so the sheet never shows stale data.
+ *
+ * `latitude`/`longitude` are sent so the script can resolve the exact location
+ * name for the "Location_Name" column; `location` carries the Google Maps link
+ * written to the "Location" column.
  */
 export function toSheetPayload(
   values: SurveyFormValues,
   photoDataUrl: string,
   locationLink: string,
-  fallbackLocationName: string,
+  coords: CapturedCoords | null,
 ): Record<string, string> {
   return {
     name: values.name.trim(),
@@ -137,6 +142,7 @@ export function toSheetPayload(
     proposalType: values.selectType === "Proposal" ? values.proposalType : "",
     photo: photoDataUrl,
     location: locationLink,
-    locationName: values.locationName.trim() || fallbackLocationName,
+    latitude: coords ? String(coords.latitude) : "",
+    longitude: coords ? String(coords.longitude) : "",
   };
 }
