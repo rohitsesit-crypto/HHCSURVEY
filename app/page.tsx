@@ -7,14 +7,7 @@ export default function Home() {
         <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
           Survey Form
         </span>
-        <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-          Organisation Survey
-        </h1>
-        <p className="mt-2 max-w-2xl text-sm text-slate-600">
-          Fill in the details below, capture a live image, and submit. Every response is
-          appended to the <span className="font-medium">Form Responses 1</span> tab of your
-          Google Sheet with the photo location.
-        </p>
+        
       </header>
 
       <SurveyForm />
